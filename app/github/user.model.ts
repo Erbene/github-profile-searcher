@@ -8,7 +8,8 @@ export class User {
   constructor(
     public login: string,
     public id:number,
-    public gravatar_url: string,
+    public avatar_url: string,
+    public gravatar_id: string,
     public url: string,
     public html_url: string,
     public followers_url: string,
