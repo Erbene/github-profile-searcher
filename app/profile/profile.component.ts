@@ -12,7 +12,7 @@ import { Repository as GithubRepository} from '../github/repository.model';
   templateUrl: './profile.component.html',
   moduleId: module.id
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit {
   public user:GithubUser;
   public userRepositories: GithubRepository[];
 
@@ -20,21 +20,22 @@ export class ProfileComponent implements OnInit{
 
   ngOnInit(){
     this.userRepositories = [];
-    this.githubUserService.getUser().subscribe(
+    this.githubUserService.onProfileUpdate.subscribe(
       (data) => {
-        this.user = new GithubUser();
-        this.user.populate(data);
+        this.user = data;
+        this.userRepositories = [];
+        this.githubUserService.getRepositories(this.user).subscribe(
+          (data) => {
+            for(let repo of data){
+              let userRepository = new GithubRepository();
+              userRepository.populate(repo);
+              this.userRepositories.push(userRepository);
+            }
+          },
+          (error) => { console.log(error) }
+        );
       },
         error => console.log(error));
-    this.githubUserService.getRepositories(this.user).subscribe(
-      (data) => {
-        for(let repo of data){
-          let userRepository = new GithubRepository();
-          userRepository.populate(repo);
-          this.userRepositories.push(userRepository);
-        }
-      },
-      (error) => { console.log(error) }
-    );
+
   }
 }
