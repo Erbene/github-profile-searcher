@@ -27,4 +27,28 @@
     </div>
   </div>
 </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Repositories</h3>
+  </div>
+  <div class="panel-body">
+    <div *ngFor="let repo of userRepositories;let first = first; let last = last">
+      <div  class="row">
+        <div class="col-xs-4 col-sm-9 col-md-9 col-lg-9">
+          <h4><a href="{{ repo.html_url }}" target="_blank">{{ repo.name }} </a></h4>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+          <span class="label label-primary">{{ repo.watchers_count }} Watchers</span>
+          <span class="label label-info">{{ repo.forks_count }} Forks</span>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <p>{{ repo.description }}</p>
+        </div>
+      </div>
+      <hr *ngIf="!last">
+    </div>
+
+  </div>
+</div>
+
 
